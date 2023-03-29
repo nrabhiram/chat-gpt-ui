@@ -1,0 +1,11 @@
+.container {
+    @apply my-auto flex items-center flex-col;
+}
+
+.error-txt {
+    @apply my-2 text-center;
+}
+
+.btn-container {
+    @apply flex;
+}

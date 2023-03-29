@@ -1,0 +1,11 @@
+.container {
+    @apply flex flex-col justify-center my-4 sm:flex-row sm:my-auto;
+}
+
+.card-title {
+    @apply text-xl font-light tracking-wide mb-2;
+}
+
+.card-text {
+    @apply text-left text-sm;
+}
