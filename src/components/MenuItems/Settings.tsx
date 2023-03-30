@@ -1,12 +1,17 @@
+import { useState } from 'react';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { MenuButton } from './MenuButton';
 import { MenuItem } from './MenuItem';
 import styles from './Settings.module.css';
 
-export const Settings = () => {
+export const Settings: React.FC<
+  React.PropsWithChildren<{ open: boolean; clickHandler: () => void; drawerHandler: () => void }>
+> = (props) => {
+  const [clickedOutside, setClickedOutside] = useState(false);
+
   return (
     <MenuItem>
-      <MenuButton>
+      <MenuButton clickHandler={props.clickHandler} clickedOutside={clickedOutside}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -23,30 +28,48 @@ export const Settings = () => {
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
       </MenuButton>
-      {/* <Dropdown>
+      <Dropdown
+        open={props.open}
+        clickHandler={props.drawerHandler}
+        setClickedOutside={(value: boolean) => setClickedOutside(value)}
+      >
         <div className={styles['settings-container']}>
           <div className={styles['settings-label-container']}>
-            <label htmlFor="temperature" className={styles['settings-label']}>Temperature</label>
+            <label htmlFor="temperature" className={styles['settings-label']}>
+              Temperature
+            </label>
             <div className={styles['spacer']}></div>
-            <input type="number" name="temperature" min="0" max="1" step="0.01" value="0.95" className={styles['num-input']} />
+            <input
+              type="number"
+              name="temperature"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.95"
+              className={styles['num-input']}
+            />
           </div>
           <p className={styles['settings-description']}>Increase the value to get more creative responses</p>
           <input type="range" name="temperature" min="0" max="1" step="0.01" className={styles['range']} />
         </div>
         <div className={styles['settings-container']}>
           <div className={styles['settings-label-container']}>
-            <label htmlFor="tokens" className={styles['settings-label']}>Tokens</label>
+            <label htmlFor="tokens" className={styles['settings-label']}>
+              Tokens
+            </label>
             <div className={styles['spacer']}></div>
             <input type="number" name="tokens" value="122" className={styles['num-input']} />
           </div>
           <p className={styles['settings-description']}>Increase the value to get more creative responses</p>
         </div>
         <div className={styles['settings-container']}>
-          <label htmlFor="prompt" className={styles['settings-label']}>System Prompt</label>
+          <label htmlFor="prompt" className={styles['settings-label']}>
+            System Prompt
+          </label>
           <p className={styles['settings-description']}>Increase the value to get more creative responses</p>
           <textarea rows={8} className={styles['textarea']} />
         </div>
-      </Dropdown> */}
+      </Dropdown>
     </MenuItem>
   );
 };

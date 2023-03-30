@@ -1,10 +1,9 @@
 import { ChatInput } from '../components/ChatInput/ChatInput';
-import { Container } from '../components/Container/Container';
 import { SpeechBubble } from '../components/SpeechBubble/SpeechBubble';
 
 export const ChatPage = () => {
   return (
-    <Container>
+    <>
       <SpeechBubble
         speaker="user"
         text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
@@ -31,6 +30,6 @@ export const ChatPage = () => {
       />
       <SpeechBubble speaker="ai" text="Yes, I am doing really well. Thank you for asking" />
       <ChatInput />
-    </Container>
+    </>
   );
 };

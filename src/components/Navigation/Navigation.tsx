@@ -3,8 +3,24 @@ import styles from './Navigation.module.css';
 import { Settings } from '../MenuItems/Settings';
 import Logo from '../../assets/logo.png';
 import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
 
 export const Navigation = () => {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
+
+  const settingsDrawerHandler = () => {
+    if (settingsOpen) {
+      setSettingsOpen(false);
+    }
+  };
+
+  const chatDrawerHandler = () => {
+    if (chatOpen) {
+      setChatOpen(false);
+    }
+  };
+
   return (
     <nav className={styles['nav-bar']}>
       <NavLink to="/">
@@ -14,8 +30,12 @@ export const Navigation = () => {
         </div>
       </NavLink>
       <div className="grow"></div>
-      <Settings />
-      <Chat />
+      <Settings
+        open={settingsOpen}
+        clickHandler={() => setSettingsOpen((isOpen) => !isOpen)}
+        drawerHandler={settingsDrawerHandler}
+      />
+      <Chat open={chatOpen} clickHandler={() => setChatOpen((isOpen) => !isOpen)} chatHandler={chatDrawerHandler} />
     </nav>
   );
 };

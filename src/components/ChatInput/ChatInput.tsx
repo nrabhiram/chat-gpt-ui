@@ -1,5 +1,6 @@
 import { Button } from '../Button/Button';
 import styles from './ChatInput.module.css';
+import { motion } from 'framer-motion';
 
 export const ChatInput = () => {
   const onChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>, height: number) => {
@@ -8,7 +9,12 @@ export const ChatInput = () => {
     target.style.height = `${target.scrollHeight}px`;
   };
   return (
-    <form className={styles['container']}>
+    <motion.form
+      className={styles['container']}
+      animate={{ y: 0, opacity: 1 }}
+      initial={{ y: 60, opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <textarea
         placeholder="Enter your prompt here..."
         onChange={(event) => onChangeHandler(event, 80)}
@@ -32,6 +38,6 @@ export const ChatInput = () => {
           />
         </svg>
       </Button>
-    </form>
+    </motion.form>
   );
 };

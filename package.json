@@ -17,6 +17,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "framer-motion": "^10.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0"

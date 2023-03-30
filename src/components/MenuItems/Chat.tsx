@@ -1,13 +1,18 @@
+import { useState } from 'react';
 import { Button } from '../Button/Button';
 import { ChatItem } from '../ChatItem/ChatItem';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { MenuButton } from './MenuButton';
 import { MenuItem } from './MenuItem';
 
-export const Chat = () => {
+export const Chat: React.FC<
+  React.PropsWithChildren<{ open: boolean; clickHandler: () => void; chatHandler: () => void }>
+> = (props) => {
+  const [clickedOutside, setClickedOutside] = useState(false);
+
   return (
     <MenuItem>
-      <MenuButton>
+      <MenuButton clickHandler={props.clickHandler} clickedOutside={clickedOutside}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -23,9 +28,20 @@ export const Chat = () => {
           />
         </svg>
       </MenuButton>
-      {/* <Dropdown>
+      <Dropdown
+        open={props.open}
+        clickHandler={props.chatHandler}
+        setClickedOutside={(value: boolean) => setClickedOutside(value)}
+      >
         <Button level="primary" fullWidth={true}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <span className="ml-1">New Chat</span>
@@ -34,7 +50,7 @@ export const Chat = () => {
         <ChatItem />
         <ChatItem />
         <ChatItem />
-      </Dropdown> */}
+      </Dropdown>
     </MenuItem>
   );
 };
