@@ -24,4 +24,25 @@ describe('Conversation', () => {
     conversation.add(speech);
     expect(conversation.speeches.length).toBe(1);
   });
+
+  it('When a human speech is added to a conversation, the latest speaker is of the human race', () => {
+    conversation.add(speech);
+    const lastIndex = conversation.speeches.length - 1;
+    expect(conversation.speeches[lastIndex].speaker.race).toBe(Race.HUMAN);
+  });
+
+  it('When an AI speech is added to a conversation, the latest speaker is of the AI race', () => {
+    const AISpeaker = {
+      race: Race.AI,
+    };
+
+    const AISpeech = {
+      speaker: AISpeaker,
+      content: 'Hello there',
+    };
+
+    conversation.add(AISpeech);
+    const lastIndex = conversation.speeches.length - 1;
+    expect(conversation.speeches[lastIndex].speaker.race).toBe(Race.AI);
+  });
 });
