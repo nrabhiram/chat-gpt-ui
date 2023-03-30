@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { Conversation, Speaker, Speech, Race } from '../src/utils';
+import { Conversation } from '../src/chat-gpt/models/conversation';
+import { Speaker, Speech, Race } from '../src/chat-gpt/utils';
 
 let conversation: Conversation;
 let speaker: Speaker;
@@ -7,12 +8,7 @@ let speech: Speech;
 
 describe('Conversation', () => {
   beforeEach(() => {
-    conversation = {
-      speeches: [],
-      add: function (speech) {
-        this.speeches.push(speech);
-      },
-    };
+    conversation = new Conversation();
 
     speech = {
       speaker: speaker,
