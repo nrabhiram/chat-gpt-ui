@@ -1,3 +1,4 @@
+import { Speech } from '../utils';
 import { Conversation } from './conversation';
 
 export enum Race {
@@ -12,11 +13,17 @@ export class Speaker {
     this.race = race;
   }
 
-  speak(content: string, conversation: Conversation) {
+  speak(content: string) {
     const speech = {
       speaker: this,
       content: content,
     };
-    conversation.add(speech);
+    return speech;
+  }
+
+  add(speech: Speech, conversation: Conversation) {
+    if (speech.speaker.race === this.race) {
+      conversation.add(speech);
+    }
   }
 }
