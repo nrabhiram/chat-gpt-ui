@@ -1,0 +1,15 @@
+.ai-container {
+    @apply flex flex-row-reverse;
+}
+
+.user-container {
+    @apply flex;
+}
+
+.ai {
+    @apply bg-gray-600 p-2 w-fit max-w-full rounded-tl-lg rounded-tr-lg rounded-br-lg my-2;
+}
+
+.user {
+    @apply bg-teal-500 inline-block w-fit max-w-full p-2 rounded-tl-lg rounded-tr-lg rounded-bl-lg my-2;
+}

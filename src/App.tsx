@@ -1,22 +1,25 @@
-import { useState } from 'react';
-import styles from './App.module.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { HomePage } from './pages/Home/Home';
+import { ChatPage } from './pages/Chat';
+import { ErrorPage } from './pages/Error/Error';
+import { AboutPage } from './pages/About/About';
+import { Layout } from './pages/Layout';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    errorElement: <ErrorPage />,
+    element: <Layout />,
+    children: [
+      { index: true, element: <HomePage /> },
+      { path: 'about', element: <AboutPage /> },
+      { path: 'chat/:chatId', element: <ChatPage /> },
+    ],
+  },
+]);
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <div className={styles['App']}>
-      <h1 className={styles['app-heading']}>Vite + React + TS + Tailwind</h1>
-      <div>
-        <button className={styles['button']} onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

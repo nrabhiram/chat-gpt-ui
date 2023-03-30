@@ -1,0 +1,3 @@
+.item-container {
+    @apply relative inline-flex self-center;
+}

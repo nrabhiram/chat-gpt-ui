@@ -1,0 +1,43 @@
+.container {
+    @apply my-auto;
+}
+
+.hero-img {
+    @apply mx-auto mb-4;
+}
+
+.hero-section {
+    @apply flex items-center flex-col;
+}
+
+.hero-text {
+    @apply basis-3/4 text-center md:text-left;
+}
+
+.primary-heading {
+    @apply text-3xl tracking-wider font-medium sm:text-4xl md:text-5xl;
+}
+
+.subtitle {
+    @apply mt-2 text-center;
+}
+
+.hero-btn-container {
+    @apply flex;
+}
+
+.secondary-section {
+    @apply mt-4;
+}
+
+.secondary-heading {
+    @apply text-2xl tracking-wide md:text-3xl text-center;
+}
+
+.prompts-container {
+    @apply flex flex-col items-center md:items-stretch md:flex-row;
+}
+
+.prompt-text {
+    @apply text-sm;
+}

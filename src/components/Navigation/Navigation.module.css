@@ -1,0 +1,11 @@
+.nav-bar {
+    @apply sticky top-0 flex items-center justify-between flex-wrap bg-gray-900 p-6;
+}
+
+.logo {
+    @apply flex items-center flex-shrink-0 text-white mr-6;
+}
+
+.title {
+    @apply font-semibold text-xl tracking-tight hidden md:block;
+}

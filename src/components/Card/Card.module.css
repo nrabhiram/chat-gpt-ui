@@ -1,0 +1,7 @@
+.card {
+    @apply transition-all ease-in-out duration-300 bg-gray-800 border-[1px] border-gray-100 border-opacity-10 p-2 rounded-md my-2 md:basis-1/3 text-center md:mr-2 flex items-center hover:bg-gray-900 ;
+}
+
+.col {
+    @apply flex-col;
+}
