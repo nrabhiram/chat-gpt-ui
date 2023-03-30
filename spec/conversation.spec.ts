@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { Conversation } from '../src/chat-gpt/models/conversation';
-import { Speaker, Speech, Race } from '../src/chat-gpt/utils';
+import { Speaker, Race } from '../src/chat-gpt/models/speaker';
+import { Speech } from '../src/chat-gpt/utils';
 
 let conversation: Conversation;
 let speaker: Speaker;
@@ -15,9 +16,7 @@ describe('Conversation', () => {
       content: 'Hello there',
     };
 
-    speaker = {
-      race: Race.HUMAN,
-    };
+    speaker = new Speaker(Race.HUMAN);
   });
 
   it('When a speech is added in a new conversation, the number of speeches is 1', () => {
@@ -32,9 +31,7 @@ describe('Conversation', () => {
   });
 
   it('When an AI speech is added to a conversation, the latest speaker is of the AI race', () => {
-    const AISpeaker = {
-      race: Race.AI,
-    };
+    const AISpeaker = new Speaker(Race.AI);
 
     const AISpeech = {
       speaker: AISpeaker,
