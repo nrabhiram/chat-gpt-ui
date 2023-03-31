@@ -27,7 +27,7 @@ export class AI extends Speaker {
   async think(conversation: Conversation) {
     const renderer = new Renderer();
     const configuration = new Configuration({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: import.meta.env.VITE_OPENAI_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
     const parameters = {
@@ -37,8 +37,8 @@ export class AI extends Speaker {
       temperature: this.temperature.value,
     };
     const response = await openai.createCompletion(parameters);
-    if (response.data.choices[1].text) {
-      return this.speak(response.data.choices[1].text);
+    if (response.data.choices[0].text) {
+      return this.speak(response.data.choices[0].text);
     } else {
       throw new Error('There was an error. Please try again.');
     }

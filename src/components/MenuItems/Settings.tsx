@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { MenuButton } from './MenuButton';
 import { MenuItem } from './MenuItem';
 import styles from './Settings.module.css';
+import { AIContext } from '../../context/ai-context';
 
 export const Settings: React.FC<
   React.PropsWithChildren<{ open: boolean; clickHandler: () => void; drawerHandler: () => void }>
 > = (props) => {
   const [clickedOutside, setClickedOutside] = useState(false);
+  const aiContext = useContext(AIContext);
 
   return (
     <MenuItem>
@@ -43,14 +45,24 @@ export const Settings: React.FC<
               type="number"
               name="temperature"
               min="0"
-              max="1"
+              max="2"
               step="0.01"
-              value="0.95"
+              value={aiContext.temperature}
+              onChange={(e) => aiContext.configure(parseFloat(e.target.value), aiContext.token, aiContext.prompt)}
               className={styles['num-input']}
             />
           </div>
           <p className={styles['settings-description']}>Increase the value to get more creative responses</p>
-          <input type="range" name="temperature" min="0" max="1" step="0.01" className={styles['range']} />
+          <input
+            type="range"
+            name="temperature"
+            min={0}
+            max={2}
+            step={0.01}
+            value={aiContext.temperature}
+            onChange={(e) => aiContext.configure(parseFloat(e.currentTarget.value), aiContext.token, aiContext.prompt)}
+            className={styles['range']}
+          />
         </div>
         <div className={styles['settings-container']}>
           <div className={styles['settings-label-container']}>
@@ -58,7 +70,13 @@ export const Settings: React.FC<
               Tokens
             </label>
             <div className={styles['spacer']}></div>
-            <input type="number" name="tokens" value="122" className={styles['num-input']} />
+            <input
+              type="number"
+              name="tokens"
+              value={aiContext.token}
+              onChange={(e) => aiContext.configure(aiContext.temperature, parseInt(e.target.value), aiContext.prompt)}
+              className={styles['num-input']}
+            />
           </div>
           <p className={styles['settings-description']}>Increase the value to get more creative responses</p>
         </div>
@@ -67,7 +85,12 @@ export const Settings: React.FC<
             System Prompt
           </label>
           <p className={styles['settings-description']}>Increase the value to get more creative responses</p>
-          <textarea rows={8} className={styles['textarea']} />
+          <textarea
+            rows={8}
+            value={aiContext.prompt}
+            onChange={(e) => aiContext.configure(aiContext.temperature, aiContext.token, e.target.value)}
+            className={styles['textarea']}
+          />
         </div>
       </Dropdown>
     </MenuItem>

@@ -2,21 +2,33 @@ import { Button } from '../Button/Button';
 import styles from './ChatInput.module.css';
 import { motion } from 'framer-motion';
 
-export const ChatInput = () => {
+export const ChatInput: React.FC<{
+  convoId: number;
+  input: string;
+  inputChangeHandler: (input: string) => void;
+  inputSubmitHandler: (id: number, prompt: string) => void;
+}> = (props) => {
   const onChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>, height: number) => {
+    props.inputChangeHandler(event.target.value);
     const target = event.target;
     target.style.height = `${height}px`;
     target.style.height = `${target.scrollHeight}px`;
   };
+
   return (
     <motion.form
       className={styles['container']}
       animate={{ y: 0, opacity: 1 }}
       initial={{ y: 60, opacity: 0 }}
       transition={{ duration: 0.5 }}
+      onSubmit={(e) => {
+        e.preventDefault();
+        props.inputSubmitHandler(props.convoId, props.input);
+      }}
     >
       <textarea
         placeholder="Enter your prompt here..."
+        value={props.input}
         onChange={(event) => onChangeHandler(event, 80)}
         style={{ height: '76px' }}
         className={styles['input']}

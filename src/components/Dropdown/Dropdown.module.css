@@ -1,3 +1,3 @@
 .container {
-    @apply absolute p-4 right-0 top-7 z-10 mt-2 w-56 origin-top-right rounded-md bg-gray-800 ring-1 ring-gray-300 ring-opacity-10 focus:outline-none;
+    @apply absolute p-4 right-0 top-7 z-10 mt-2 w-56 origin-top-right rounded-md bg-gray-800 ring-1 ring-gray-300 ring-opacity-10 focus:outline-none h-auto max-h-[480px] overflow-y-auto;
 }

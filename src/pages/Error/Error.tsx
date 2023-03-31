@@ -4,9 +4,19 @@ import styles from './Error.module.css';
 import { Button } from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useContext } from 'react';
+import { AIContext } from '../../context/ai-context';
 
 export const ErrorPage = () => {
   const navigate = useNavigate();
+  const aiContext = useContext(AIContext);
+
+  const newChatHandler = () => {
+    const id = aiContext.conversations.length;
+    aiContext.newConvo();
+    navigate(`/chat/${id}`);
+  };
+
   return (
     <Container>
       <div className={styles['container']}>
@@ -31,7 +41,7 @@ export const ErrorPage = () => {
           initial={{ y: 60, opacity: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <Button level="primary" fullWidth={false} clickHandler={() => navigate('/chat/1')}>
+          <Button level="primary" fullWidth={false} clickHandler={newChatHandler}>
             New Chat
           </Button>
           <div className="mx-1"></div>

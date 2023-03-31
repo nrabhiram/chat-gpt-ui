@@ -1,14 +1,25 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button } from '../Button/Button';
 import { ChatItem } from '../ChatItem/ChatItem';
 import { Dropdown } from '../Dropdown/Dropdown';
 import { MenuButton } from './MenuButton';
 import { MenuItem } from './MenuItem';
+import { AIContext } from '../../context/ai-context';
+import { useNavigate } from 'react-router';
 
 export const Chat: React.FC<
   React.PropsWithChildren<{ open: boolean; clickHandler: () => void; chatHandler: () => void }>
 > = (props) => {
   const [clickedOutside, setClickedOutside] = useState(false);
+
+  const navigate = useNavigate();
+  const aiContext = useContext(AIContext);
+
+  const newChatHandler = () => {
+    const id = aiContext.conversations.length;
+    aiContext.newConvo();
+    navigate(`/chat/${id}`);
+  };
 
   return (
     <MenuItem>
@@ -33,7 +44,7 @@ export const Chat: React.FC<
         clickHandler={props.chatHandler}
         setClickedOutside={(value: boolean) => setClickedOutside(value)}
       >
-        <Button level="primary" fullWidth={true}>
+        <Button level="primary" fullWidth={true} clickHandler={newChatHandler}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -46,10 +57,9 @@ export const Chat: React.FC<
           </svg>
           <span className="ml-1">New Chat</span>
         </Button>
-        <ChatItem />
-        <ChatItem />
-        <ChatItem />
-        <ChatItem />
+        {aiContext.conversations.map((convo, index) => (
+          <ChatItem key={index} />
+        ))}
       </Dropdown>
     </MenuItem>
   );
