@@ -8,7 +8,7 @@ export const AIContext = React.createContext<{
   token: number;
   prompt: string;
   newConvo: () => void;
-  sendPrompt: (id: number, prompt: string) => void;
+  sendPrompt: (id: number, prompt: string) => Promise<void>;
   configure: (temp: number, token: number, prompt: string) => void;
 }>({
   conversations: [],
@@ -16,7 +16,7 @@ export const AIContext = React.createContext<{
   token: 2048,
   prompt: '',
   newConvo: () => {},
-  sendPrompt: (id: number, prompt: string) => {},
+  sendPrompt: (id: number, prompt: string) => new Promise((resolve, reject) => {}),
   configure: (temp: number, token: number, prompt: string) => {},
 });
 

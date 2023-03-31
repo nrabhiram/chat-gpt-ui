@@ -2,7 +2,6 @@ import { Button } from '../../components/Button/Button';
 import Hero from '../../assets/hero.png';
 import styles from './Home.module.css';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '../../components/Card/Card';
 import { motion } from 'framer-motion';
 import { useContext } from 'react';
 import { AIContext } from '../../context/ai-context';

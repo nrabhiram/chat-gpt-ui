@@ -57,8 +57,8 @@ export const Chat: React.FC<
           </svg>
           <span className="ml-1">New Chat</span>
         </Button>
-        {aiContext.conversations.map((convo) => (
-          <ChatItem />
+        {aiContext.conversations.map((convo, index) => (
+          <ChatItem key={index} />
         ))}
       </Dropdown>
     </MenuItem>
