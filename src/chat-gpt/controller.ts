@@ -29,6 +29,7 @@ export class Controller {
 
   configure(temperature: number, token: number, prompt: string) {
     const parser = new Parser();
+    const renderer = new Renderer();
     const ai = parser.ai({
       race: 'AI',
       temperature: temperature,
@@ -36,14 +37,23 @@ export class Controller {
       prompt: prompt,
     });
     this.writeAI(ai);
+    return {
+      temperature: renderer.temperature(ai.temperature),
+      token: renderer.token(ai.token),
+      prompt: renderer.prompt(ai.prompt),
+    };
   }
 
   convos() {
-    return JSON.parse(localStorage.getItem('conversations') as string);
+    const convos = this.readConversations();
+    const renderer = new Renderer();
+    return renderer.conversations(convos);
   }
 
   settings() {
-    return JSON.parse(localStorage.getItem('AI') as string);
+    const ai = this.readAI();
+    const renderer = new Renderer();
+    return renderer.ai(ai);
   }
 
   private readConversations() {
@@ -62,11 +72,7 @@ export class Controller {
 
   private writeConversations(convos: Conversation[]) {
     const renderer = new Renderer();
-    const conversations: RenderedSpeech[][] = [];
-    for (let i = 0; i < convos.length; i++) {
-      const renderedConvo = renderer.conversation(convos[i]);
-      conversations.push(renderedConvo);
-    }
+    const conversations = renderer.conversations(convos);
     localStorage.setItem('conversations', JSON.stringify(conversations));
   }
 

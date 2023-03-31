@@ -4,6 +4,7 @@ import { ChatPage } from './pages/Chat';
 import { ErrorPage } from './pages/Error/Error';
 import { AboutPage } from './pages/About/About';
 import { Layout } from './pages/Layout';
+import { AIContextProvider } from './context/ai-context';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AIContextProvider>
+      <RouterProvider router={router} />
+    </AIContextProvider>
+  );
 }
 
 export default App;

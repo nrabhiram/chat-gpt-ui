@@ -1,0 +1,15 @@
+.secondary-section {
+    @apply my-auto;
+}
+
+.secondary-heading {
+    @apply text-2xl tracking-wide md:text-3xl text-center;
+}
+
+.prompts-container {
+    @apply flex flex-col items-center md:items-stretch md:flex-row;
+}
+
+.prompt-text {
+    @apply text-sm;
+}

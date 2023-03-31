@@ -4,9 +4,19 @@ import styles from './Home.module.css';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../../components/Card/Card';
 import { motion } from 'framer-motion';
+import { useContext } from 'react';
+import { AIContext } from '../../context/ai-context';
 
 export const HomePage = () => {
   const navigate = useNavigate();
+  const aiContext = useContext(AIContext);
+
+  const newChatHandler = () => {
+    const id = aiContext.conversations.length;
+    aiContext.newConvo();
+    navigate(`/chat/${id}`);
+  };
+
   return (
     <div className={styles['container']}>
       <motion.img
@@ -30,7 +40,7 @@ export const HomePage = () => {
           </p>
         </div>
         <div className={styles['hero-btn-container']}>
-          <Button level="primary" fullWidth={false} clickHandler={() => navigate('/chat/1')}>
+          <Button level="primary" fullWidth={false} clickHandler={newChatHandler}>
             Start Talking!
           </Button>
           <div className="mx-1"></div>
@@ -39,20 +49,6 @@ export const HomePage = () => {
           </Button>
         </div>
       </motion.div>
-      {/* <div className={styles['secondary-section']}>
-        <h2 className={styles['secondary-heading']}>Need an icebreaker?</h2>
-        <div className={styles['prompts-container']}>
-          <Card direction="row">
-            <p className={styles['prompt-text']}>Explain quantum computing in simple terms</p>
-          </Card>
-          <Card direction="row">
-            <p className={styles['prompt-text']}>Got any creative ideas for a 10 year old's birthday?</p>
-          </Card>
-          <Card direction="row">
-            <p className={styles['prompt-text']}>How do I make an HTTP request in Javascript?</p>
-          </Card>
-        </div>
-      </div> */}
     </div>
   );
 };

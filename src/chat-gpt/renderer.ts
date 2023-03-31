@@ -12,6 +12,15 @@ export type RenderedSpeech = {
 };
 
 export class Renderer {
+  conversations(convos: Conversation[]) {
+    const conversations: RenderedSpeech[][] = [];
+    for (let i = 0; i < convos.length; i++) {
+      const renderedConvo = this.conversation(convos[i]);
+      conversations.push(renderedConvo);
+    }
+    return conversations;
+  }
+
   conversation(convo: Conversation) {
     const renderedConvosArr: RenderedSpeech[] = [];
     for (let i = 0; i < convo.speeches.length; i++) {
