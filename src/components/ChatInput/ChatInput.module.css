@@ -2,6 +2,10 @@
     @apply bg-gray-600 appearance-none border-[1px] border-transparent rounded w-[90%] lg:w-full py-2 px-4 leading-tight focus:outline-none focus:border-teal-500 mx-auto max-h-40 my-2;
 }
 
+.disabled-input {
+    @apply bg-gray-400 appearance-none border-[1px] border-transparent rounded w-[90%] lg:w-full py-2 px-4 leading-tight focus:outline-none focus:border-teal-500 mx-auto max-h-40 my-2;
+}
+
 .container {
     @apply fixed z-20 flex items-center justify-center bottom-0 right-[2px] lg:right-auto w-screen lg:w-[56rem] max-w-4xl bg-gray-900 p-2;
 }

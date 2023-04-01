@@ -16,17 +16,21 @@ export const ChatPage = () => {
   const convoId = params.chatId as number;
 
   const onInputChange = (input: string) => {
+    setError('');
     setInput(input);
   };
 
   const onInputSubmit = async (id: number, prompt: string) => {
-    try {
-      setLoading(true);
-      await aiContext.sendPrompt(id, prompt);
-    } catch (err) {
-      setError('Oops...an error has occurred. Please try again.');
+    if (input.trim().length > 0) {
+      try {
+        setLoading(true);
+        await aiContext.sendPrompt(id, prompt);
+      } catch (err) {
+        setError('Oops...an error has occurred. Please try again.');
+      }
+      setInput('');
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -62,6 +66,7 @@ export const ChatPage = () => {
         input={input}
         inputChangeHandler={onInputChange}
         inputSubmitHandler={onInputSubmit}
+        submitting={loading}
       />
     </>
   );

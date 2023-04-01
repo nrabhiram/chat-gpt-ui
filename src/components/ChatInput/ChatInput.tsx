@@ -7,6 +7,7 @@ export const ChatInput: React.FC<{
   input: string;
   inputChangeHandler: (input: string) => void;
   inputSubmitHandler: (id: number, prompt: string) => void;
+  submitting: boolean;
 }> = (props) => {
   const onChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>, height: number) => {
     props.inputChangeHandler(event.target.value);
@@ -31,10 +32,11 @@ export const ChatInput: React.FC<{
         value={props.input}
         onChange={(event) => onChangeHandler(event, 80)}
         style={{ height: '76px' }}
-        className={styles['input']}
+        className={props.submitting ? styles['disabled-input'] : styles['input']}
+        disabled={props.submitting}
       />
       <div className="mx-1"></div>
-      <Button level="primary" fullWidth={false}>
+      <Button level="primary" fullWidth={false} submitting={props.submitting}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

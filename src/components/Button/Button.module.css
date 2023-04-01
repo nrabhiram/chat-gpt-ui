@@ -13,3 +13,11 @@
 .full-width {
     @apply w-full;
 }
+
+.primary-disabled {
+    @apply bg-teal-700 text-neutral-50;
+}
+
+.secondary-disabled {
+    @apply border-2 border-teal-700 text-teal-700;
+}
