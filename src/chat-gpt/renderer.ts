@@ -11,9 +11,15 @@ export type RenderedSpeech = {
   content: string;
 };
 
+export type RenderedConversation = {
+  title: string;
+  description: string;
+  speeches: RenderedSpeech[];
+};
+
 export class Renderer {
   conversations(convos: Conversation[]) {
-    const conversations: RenderedSpeech[][] = [];
+    const conversations: RenderedConversation[] = [];
     for (let i = 0; i < convos.length; i++) {
       const renderedConvo = this.conversation(convos[i]);
       conversations.push(renderedConvo);
@@ -27,7 +33,7 @@ export class Renderer {
       const speech = this.speech(convo.speeches[i]);
       renderedConvosArr.push(speech);
     }
-    return renderedConvosArr;
+    return { title: convo.title(), description: convo.description(), speeches: renderedConvosArr };
   }
 
   speech(speech: Speech) {
@@ -62,8 +68,8 @@ export class Renderer {
     return prompt.content;
   }
 
-  AIPrompt(ai: AI, convo: Conversation) {
-    let prompt = ai.prompt.content;
+  AIPrompt(sysPrompt: Prompt, convo: Conversation) {
+    let prompt = sysPrompt.content;
     for (let i = 0; i < convo.speeches.length; i++) {
       const speech = `${this.speaker(convo.speeches[i].speaker).race.valueOf()}: ${convo.speeches[i].content}`;
       prompt = `${prompt} ${speech}`;

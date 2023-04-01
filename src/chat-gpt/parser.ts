@@ -4,22 +4,22 @@ import { Prompt } from './models/prompt';
 import { Race, Speaker } from './models/speaker';
 import { Temperature } from './models/temperature';
 import { Token } from './models/token';
-import { RenderedSpeech } from './renderer';
+import { RenderedConversation } from './renderer';
 import { Speech } from './utils';
 
 export class Parser {
-  conversation(convo: RenderedSpeech[]) {
+  conversation(convo: RenderedConversation) {
     const speeches: Speech[] = [];
-    for (let i = 0; i < convo.length; i++) {
+    for (let i = 0; i < convo.speeches.length; i++) {
       let speaker: Speaker;
-      if (convo[i].speaker === 'HUMAN') {
+      if (convo.speeches[i].speaker === 'HUMAN') {
         speaker = new Speaker(Race.HUMAN);
       } else {
         speaker = new Speaker(Race.AI);
       }
-      speeches.push({ speaker: speaker, content: convo[i].content });
+      speeches.push({ speaker: speaker, content: convo.speeches[i].content });
     }
-    return new Conversation(speeches);
+    return new Conversation(speeches, convo.title, convo.description);
   }
 
   speech(speech: { speaker: Race; content: string }) {

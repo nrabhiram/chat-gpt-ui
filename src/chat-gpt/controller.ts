@@ -24,6 +24,9 @@ export class Controller {
     const speech = human.speak(prompt);
     human.add(speech, curConvo);
     const response = await ai.think(curConvo);
+    ai.add(response, curConvo);
+    // await ai.summarize(curConvo);
+    this.writeConversations(convos);
     return response;
   }
 

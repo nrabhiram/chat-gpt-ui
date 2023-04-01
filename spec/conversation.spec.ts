@@ -42,4 +42,60 @@ describe('Conversation', () => {
     const lastIndex = conversation.speeches.length - 1;
     expect(conversation.speeches[lastIndex].speaker.race).toBe(Race.AI);
   });
+
+  it('An unsummarized conversation has a title of "Untitled Conversation"', () => {
+    const AISpeaker = new Speaker(Race.AI);
+
+    const AISpeech = {
+      speaker: AISpeaker,
+      content: 'Hello there',
+    };
+
+    conversation.add(AISpeech);
+    expect(conversation.title()).toBe('Untitled Conversation');
+  });
+
+  it('An unsummarized conversation has a description of "This conversation hasn\'t been summarized."', () => {
+    const AISpeaker = new Speaker(Race.AI);
+
+    const AISpeech = {
+      speaker: AISpeaker,
+      content: 'Hello there',
+    };
+
+    conversation.add(AISpeech);
+    expect(conversation.description()).toBe("This conversation hasn't been summarized.");
+  });
+
+  it('A summarized conversation with a blank title in the summary still has a title of "Untitled Conversation"', () => {
+    const AISpeaker = new Speaker(Race.AI);
+
+    const AISpeech = {
+      speaker: AISpeaker,
+      content: 'Hello there',
+    };
+
+    conversation.add(AISpeech);
+    conversation.summarize({ title: '', description: '' });
+    expect(conversation.title()).toBe('Untitled Conversation');
+  });
+
+  it('A summarized conversation with a blank description in the summary still has the same unsummarized description', () => {
+    const AISpeaker = new Speaker(Race.AI);
+
+    const AISpeech = {
+      speaker: AISpeaker,
+      content: 'Hello there',
+    };
+
+    conversation.add(AISpeech);
+    conversation.summarize({ title: '', description: '' });
+    expect(conversation.description()).toBe("This conversation hasn't been summarized.");
+  });
+
+  it('A conversation with lesser than 2 speeches cannot be summarized', () => {
+    conversation.summarize({ title: 'New Title', description: 'New Description.' });
+    expect(conversation.title()).toBe('Untitled Conversation');
+    expect(conversation.description()).toEqual("This conversation hasn't been summarized.");
+  });
 });
