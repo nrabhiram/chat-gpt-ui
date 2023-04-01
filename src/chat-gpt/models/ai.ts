@@ -25,6 +25,19 @@ export class AI extends Speaker {
   }
 
   async think(conversation: Conversation) {
+    const response = await this.request(this.prompt, conversation, this.token.length, this.temperature.value);
+    return response;
+  }
+
+  async summarize(conversation: Conversation) {
+    const titlePrompt = new Prompt("Summarize the following conversation with a title that doesn't exceed 20 letters");
+    const descriptionPrompt = new Prompt('Describe the following conversation in less than 50 words.');
+    const title = await this.request(titlePrompt, conversation, 100, 0);
+    const description = await this.request(descriptionPrompt, conversation, 100, 0);
+    conversation.summarize({ title: title.content, description: description.content });
+  }
+
+  private async request(prompt: Prompt, conversation: Conversation, tokens: number, temperature: number) {
     const renderer = new Renderer();
     const configuration = new Configuration({
       apiKey: import.meta.env.VITE_OPENAI_API_KEY,
@@ -32,9 +45,9 @@ export class AI extends Speaker {
     const openai = new OpenAIApi(configuration);
     const parameters = {
       model: 'text-davinci-003',
-      prompt: renderer.AIPrompt(this, conversation),
-      max_tokens: this.token.length,
-      temperature: this.temperature.value,
+      prompt: renderer.AIPrompt(prompt, conversation),
+      max_tokens: tokens,
+      temperature: temperature,
     };
     const response = await openai.createCompletion(parameters);
     if (response.data.choices[0].text) {
