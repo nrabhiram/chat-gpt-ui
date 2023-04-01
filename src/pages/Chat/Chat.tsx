@@ -55,9 +55,13 @@ export const ChatPage = () => {
         <div className={styles['chat-container']}>
           {aiContext.conversations[convoId].speeches.map((speech, id) => {
             const speaker = speech.speaker === 'HUMAN' ? 'user' : 'ai';
-            return <SpeechBubble key={id} speaker={speaker} text={speech.content} />;
+            let animate = false;
+            if (speaker === 'user' && id === aiContext.conversations[convoId].speeches.length - 1) {
+              animate = true;
+            }
+            return <SpeechBubble key={id} speaker={speaker} text={speech.content} animate={animate} />;
           })}
-          {loading && <SpeechBubble speaker="ai" text="" loading={true} />}
+          {loading && <SpeechBubble speaker="ai" text="" loading={true} animate={true} delay={0.5} />}
           {error && <div className={styles['error-container']}>{error}</div>}
         </div>
       )}
