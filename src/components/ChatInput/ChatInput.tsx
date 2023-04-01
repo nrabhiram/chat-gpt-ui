@@ -3,10 +3,9 @@ import styles from './ChatInput.module.css';
 import { motion } from 'framer-motion';
 
 export const ChatInput: React.FC<{
-  convoId: number;
   input: string;
   inputChangeHandler: (input: string) => void;
-  inputSubmitHandler: (id: number, prompt: string) => void;
+  inputSubmitHandler: (prompt: string) => void;
   submitting: boolean;
 }> = (props) => {
   const onChangeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>, height: number) => {
@@ -24,7 +23,7 @@ export const ChatInput: React.FC<{
       transition={{ duration: 0.5 }}
       onSubmit={(e) => {
         e.preventDefault();
-        props.inputSubmitHandler(props.convoId, props.input);
+        props.inputSubmitHandler(props.input);
       }}
     >
       <textarea

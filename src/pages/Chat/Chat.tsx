@@ -1,10 +1,12 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ChatInput } from '../../components/ChatInput/ChatInput';
 import { SpeechBubble } from '../../components/SpeechBubble/SpeechBubble';
 import { AIContext } from '../../context/ai-context';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Card } from '../../components/Card/Card';
 import styles from './Chat.module.css';
+import { RenderedConversation } from '../../chat-gpt/renderer';
+import { motion } from 'framer-motion';
 
 const promptTemplates = [
   'Explain quantum computing in simple terms',
@@ -16,10 +18,18 @@ export const ChatPage = () => {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const params = useParams() as any;
-  const aiContext = useContext(AIContext);
+  const [conversation, setConversation] = useState<RenderedConversation | undefined>();
+  const { chatId } = useParams() as any;
+  const { sendPrompt, conversations } = useContext(AIContext);
+  const navigate = useNavigate();
 
-  const convoId = params.chatId as number;
+  useEffect(() => {
+    if (conversations[chatId]) {
+      setConversation(conversations[chatId]);
+    } else {
+      navigate('/');
+    }
+  }, [conversations, chatId]);
 
   const onInputChange = (input: string) => {
     setError('');
@@ -30,25 +40,31 @@ export const ChatPage = () => {
     setInput(template);
   };
 
-  const onInputSubmit = async (id: number, prompt: string) => {
-    if (input.trim().length > 0) {
+  const onInputSubmit = async (prompt: string) => {
+    setError('');
+    if (prompt.trim().length > 0) {
       try {
         setLoading(true);
-        await aiContext.sendPrompt(id, prompt);
+        await sendPrompt(chatId, prompt);
+        setInput('');
       } catch (err) {
         setError('Oops...an error has occurred. Please try again.');
       }
-      setInput('');
       setLoading(false);
     }
   };
 
   return (
     <>
-      {aiContext.conversations[convoId].speeches.length === 0 && (
+      {conversation && conversation.speeches.length === 0 && (
         <div className={styles['secondary-section']}>
           <h2 className={styles['secondary-heading']}>Need an icebreaker?</h2>
-          <div className={styles['prompts-container']}>
+          <motion.div
+            className={styles['prompts-container']}
+            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          >
             {promptTemplates.map((prompt, id) => (
               <button key={id} onClick={() => onTemplateClicked(prompt)}>
                 <Card direction="row">
@@ -56,15 +72,15 @@ export const ChatPage = () => {
                 </Card>
               </button>
             ))}
-          </div>
+          </motion.div>
         </div>
       )}
-      {aiContext.conversations[convoId].speeches.length > 0 && (
+      {conversation && conversation.speeches.length > 0 && (
         <div className={styles['chat-container']}>
-          {aiContext.conversations[convoId].speeches.map((speech, id) => {
+          {conversation.speeches.map((speech, id) => {
             const speaker = speech.speaker === 'HUMAN' ? 'user' : 'ai';
             let animate = false;
-            if (speaker === 'user' && id === aiContext.conversations[convoId].speeches.length - 1) {
+            if (id === conversation.speeches.length - 1) {
               animate = true;
             }
             return <SpeechBubble key={id} speaker={speaker} text={speech.content} animate={animate} />;
@@ -74,7 +90,6 @@ export const ChatPage = () => {
         </div>
       )}
       <ChatInput
-        convoId={convoId}
         input={input}
         inputChangeHandler={onInputChange}
         inputSubmitHandler={onInputSubmit}

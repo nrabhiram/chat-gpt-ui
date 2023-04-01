@@ -5,15 +5,17 @@ import { Prompt } from './models/prompt';
 import { Temperature } from './models/temperature';
 import { Token } from './models/token';
 import { Parser } from './parser';
-import { RenderedSpeech, Renderer } from './renderer';
+import { RenderedConversation, Renderer } from './renderer';
 
 export class Controller {
-  newConvo(speeches: RenderedSpeech[]) {
+  newConvo(conversation: RenderedConversation) {
     const convos = this.readConversations();
     const parser = new Parser();
-    const newConvo = parser.conversation(speeches);
+    const renderer = new Renderer();
+    const newConvo = parser.conversation(conversation);
     convos.push(newConvo);
     this.writeConversations(convos);
+    return renderer.conversation(newConvo);
   }
 
   async prompt(convoId: number, prompt: string) {
@@ -65,7 +67,7 @@ export class Controller {
     const conversations: Conversation[] = [];
     if (JSONParsedConvos) {
       for (let i = 0; i < JSONParsedConvos.length; i++) {
-        const renderedConvo = JSONParsedConvos[i] as RenderedSpeech[];
+        const renderedConvo = JSONParsedConvos[i];
         const convo = parser.conversation(renderedConvo);
         conversations.push(convo);
       }

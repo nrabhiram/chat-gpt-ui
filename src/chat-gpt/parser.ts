@@ -10,16 +10,14 @@ import { Speech } from './utils';
 export class Parser {
   conversation(convo: RenderedConversation) {
     const speeches: Speech[] = [];
-    if (speeches.length > 0) {
-      for (let i = 0; i < convo.speeches.length; i++) {
-        let speaker: Speaker;
-        if (convo.speeches[i].speaker === 'HUMAN') {
-          speaker = new Speaker(Race.HUMAN);
-        } else {
-          speaker = new Speaker(Race.AI);
-        }
-        speeches.push({ speaker: speaker, content: convo.speeches[i].content });
+    for (let i = 0; i < convo.speeches.length; i++) {
+      let speaker: Speaker;
+      if (convo.speeches[i].speaker === 'HUMAN') {
+        speaker = new Speaker(Race.HUMAN);
+      } else {
+        speaker = new Speaker(Race.AI);
       }
+      speeches.push({ speaker: speaker, content: convo.speeches[i].content });
     }
     return new Conversation(speeches, convo.title, convo.description);
   }

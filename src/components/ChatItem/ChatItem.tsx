@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styles from './ChatItem.module.css';
 import { RenderedConversation } from '../../chat-gpt/renderer';
 
@@ -13,11 +12,9 @@ export const ChatItem: React.FC<React.PropsWithChildren<{ convo: RenderedConvers
   };
 
   return (
-    <Link to="/">
-      <div className={styles['card']}>
-        <h4 className={styles['title']}>{format(props.convo.title, 20)}</h4>
-        <p className={styles['description']}>{format(props.convo.description, 40)}</p>
-      </div>
-    </Link>
+    <div className={styles['card']}>
+      <h4 className={styles['title']}>{format(props.convo.title, 20)}</h4>
+      <p className={styles['description']}>{format(props.convo.description, 40)}</p>
+    </div>
   );
 };

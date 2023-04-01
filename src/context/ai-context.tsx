@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RenderedSpeech, RenderedConversation } from '../chat-gpt/renderer';
+import { RenderedConversation } from '../chat-gpt/renderer';
 import { Controller } from '../chat-gpt/controller';
 
 export const AIContext = React.createContext<{
@@ -38,11 +38,8 @@ export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {
 
   const newConvo = () => {
     const chatGptApi = new Controller();
-    chatGptApi.newConvo([]);
-    setConversations((prevConvos) => [
-      ...prevConvos,
-      { title: 'New Title', description: "This conversation hasn't been summarized.", speeches: [] },
-    ]);
+    const addedConvo = chatGptApi.newConvo({ title: '', description: '', speeches: [] });
+    setConversations((prevConvos) => [...prevConvos, addedConvo]);
   };
 
   const sendPrompt = async (id: number, prompt: string) => {
@@ -52,12 +49,9 @@ export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {
       newConvos[id].speeches.push({ speaker: 'HUMAN', content: prompt });
       return newConvos;
     });
-    const response = await chatGptApi.prompt(id, prompt);
-    setConversations((prevConvos) => {
-      const newConvos = [...prevConvos];
-      newConvos[id].speeches.push({ speaker: 'AI', content: response.content });
-      return newConvos;
-    });
+    await chatGptApi.prompt(id, prompt);
+    const conversations = chatGptApi.convos();
+    setConversations(conversations);
   };
 
   const configure = (temp: number, token: number, prompt: string) => {

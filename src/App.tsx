@@ -13,8 +13,8 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: 'about', element: <AboutPage /> },
-      { path: 'chat/:chatId', element: <ChatPage /> },
+      { path: '/about', element: <AboutPage /> },
+      { path: '/chat/:chatId', element: <ChatPage /> },
     ],
   },
 ]);
