@@ -31,7 +31,7 @@ export const ChatPage = () => {
 
   return (
     <>
-      {aiContext.conversations[convoId].length === 0 && (
+      {aiContext.conversations[convoId].speeches.length === 0 && (
         <div className={styles['secondary-section']}>
           <h2 className={styles['secondary-heading']}>Need an icebreaker?</h2>
           <div className={styles['prompts-container']}>
@@ -47,9 +47,9 @@ export const ChatPage = () => {
           </div>
         </div>
       )}
-      {aiContext.conversations[convoId].length > 0 && (
+      {aiContext.conversations[convoId].speeches.length > 0 && (
         <div className="pb-[160px]">
-          {aiContext.conversations[convoId].map((speech, id) => {
+          {aiContext.conversations[convoId].speeches.map((speech, id) => {
             const speaker = speech.speaker === 'HUMAN' ? 'user' : 'ai';
             return <SpeechBubble key={id} speaker={speaker} text={speech.content} />;
           })}
