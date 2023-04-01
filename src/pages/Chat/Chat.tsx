@@ -6,6 +6,12 @@ import { useParams } from 'react-router';
 import { Card } from '../../components/Card/Card';
 import styles from './Chat.module.css';
 
+const promptTemplates = [
+  'Explain quantum computing in simple terms',
+  "Got any creative ideas for a 10 year old's birthday?",
+  'How do I make an HTTP request in Javascript?',
+];
+
 export const ChatPage = () => {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -18,6 +24,10 @@ export const ChatPage = () => {
   const onInputChange = (input: string) => {
     setError('');
     setInput(input);
+  };
+
+  const onTemplateClicked = (template: string) => {
+    setInput(template);
   };
 
   const onInputSubmit = async (id: number, prompt: string) => {
@@ -39,15 +49,13 @@ export const ChatPage = () => {
         <div className={styles['secondary-section']}>
           <h2 className={styles['secondary-heading']}>Need an icebreaker?</h2>
           <div className={styles['prompts-container']}>
-            <Card direction="row">
-              <p className={styles['prompt-text']}>Explain quantum computing in simple terms</p>
-            </Card>
-            <Card direction="row">
-              <p className={styles['prompt-text']}>Got any creative ideas for a 10 year old&apos;s birthday?</p>
-            </Card>
-            <Card direction="row">
-              <p className={styles['prompt-text']}>How do I make an HTTP request in Javascript?</p>
-            </Card>
+            {promptTemplates.map((prompt, id) => (
+              <button key={id} onClick={() => onTemplateClicked(prompt)}>
+                <Card direction="row">
+                  <p className={styles['prompt-text']}>{prompt}</p>
+                </Card>
+              </button>
+            ))}
           </div>
         </div>
       )}
