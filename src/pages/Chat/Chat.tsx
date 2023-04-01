@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react';
-import { ChatInput } from '../components/ChatInput/ChatInput';
-import { SpeechBubble } from '../components/SpeechBubble/SpeechBubble';
-import { AIContext } from '../context/ai-context';
+import { ChatInput } from '../../components/ChatInput/ChatInput';
+import { SpeechBubble } from '../../components/SpeechBubble/SpeechBubble';
+import { AIContext } from '../../context/ai-context';
 import { useParams } from 'react-router';
-import { Card } from '../components/Card/Card';
+import { Card } from '../../components/Card/Card';
 import styles from './Chat.module.css';
 
 export const ChatPage = () => {
@@ -48,13 +48,13 @@ export const ChatPage = () => {
         </div>
       )}
       {aiContext.conversations[convoId].speeches.length > 0 && (
-        <div className="pb-[160px]">
+        <div className={styles['chat-container']}>
           {aiContext.conversations[convoId].speeches.map((speech, id) => {
             const speaker = speech.speaker === 'HUMAN' ? 'user' : 'ai';
             return <SpeechBubble key={id} speaker={speaker} text={speech.content} />;
           })}
           {loading && <SpeechBubble speaker="ai" text="" loading={true} />}
-          {error && <div className="bg-red-200 text-red-400 p-4 rounded-md">{error}</div>}
+          {error && <div className={styles['error-container']}>{error}</div>}
         </div>
       )}
       <ChatInput
