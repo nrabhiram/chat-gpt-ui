@@ -78,13 +78,15 @@ export const Settings: React.FC<
               className={styles['num-input']}
             />
           </div>
-          <p className={styles['settings-description']}>Increase the value to get more creative responses</p>
+          <p className={styles['settings-description']}>The maximum number of tokens to generate in the completion.</p>
         </div>
         <div className={styles['settings-container']}>
           <label htmlFor="prompt" className={styles['settings-label']}>
             System Prompt
           </label>
-          <p className={styles['settings-description']}>Increase the value to get more creative responses</p>
+          <p className={styles['settings-description']}>
+            The base prompt to which the conversation is appended in order to generate a completion.
+          </p>
           <textarea
             rows={8}
             value={aiContext.prompt}

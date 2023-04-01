@@ -6,6 +6,7 @@ import { MenuButton } from './MenuButton';
 import { MenuItem } from './MenuItem';
 import { AIContext } from '../../context/ai-context';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 export const Chat: React.FC<
   React.PropsWithChildren<{ open: boolean; clickHandler: () => void; chatHandler: () => void }>
@@ -58,7 +59,9 @@ export const Chat: React.FC<
           <span className="ml-1">New Chat</span>
         </Button>
         {aiContext.conversations.map((convo, index) => (
-          <ChatItem key={index} />
+          <Link key={index} to={`/chat/${index}`}>
+            <ChatItem convo={convo} />
+          </Link>
         ))}
       </Dropdown>
     </MenuItem>

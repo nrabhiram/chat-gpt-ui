@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { RenderedSpeech } from '../chat-gpt/renderer';
+import { RenderedConversation } from '../chat-gpt/renderer';
 import { Controller } from '../chat-gpt/controller';
 
 export const AIContext = React.createContext<{
-  conversations: RenderedSpeech[][];
+  conversations: RenderedConversation[];
   temperature: number;
   token: number;
   prompt: string;
@@ -21,7 +21,7 @@ export const AIContext = React.createContext<{
 });
 
 export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {
-  const [conversations, setConversations] = useState<RenderedSpeech[][]>([]);
+  const [conversations, setConversations] = useState<RenderedConversation[]>([]);
   const [temperature, setTemperature] = useState(0);
   const [token, setToken] = useState(2048);
   const [prompt, setPrompt] = useState('');
@@ -38,23 +38,20 @@ export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {
 
   const newConvo = () => {
     const chatGptApi = new Controller();
-    chatGptApi.newConvo([]);
-    setConversations((prevConvos) => [...prevConvos, []]);
+    const addedConvo = chatGptApi.newConvo({ title: '', description: '', speeches: [] });
+    setConversations((prevConvos) => [...prevConvos, addedConvo]);
   };
 
   const sendPrompt = async (id: number, prompt: string) => {
     const chatGptApi = new Controller();
     setConversations((prevConvos) => {
       const newConvos = [...prevConvos];
-      newConvos[id].push({ speaker: 'HUMAN', content: prompt });
+      newConvos[id].speeches.push({ speaker: 'HUMAN', content: prompt });
       return newConvos;
     });
-    const response = await chatGptApi.prompt(id, prompt);
-    setConversations((prevConvos) => {
-      const newConvos = [...prevConvos];
-      newConvos[id].push({ speaker: 'AI', content: response.content });
-      return newConvos;
-    });
+    await chatGptApi.prompt(id, prompt);
+    const conversations = chatGptApi.convos();
+    setConversations(conversations);
   };
 
   const configure = (temp: number, token: number, prompt: string) => {

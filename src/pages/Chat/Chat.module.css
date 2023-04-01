@@ -13,3 +13,11 @@
 .prompt-text {
     @apply text-sm;
 }
+
+.chat-container {
+    @apply pb-40;
+}
+
+.error-container {
+    @apply bg-red-200 text-red-400 p-4 rounded-md;
+}
