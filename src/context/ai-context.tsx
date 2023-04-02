@@ -58,7 +58,11 @@ export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {
   const summarizeConvo = async (id: number) => {
     const chatGptApi = new Controller();
     let conversations = chatGptApi.convos();
-    if (conversations[id].speeches.length === 2) {
+    if (
+      conversations[id].speeches.length === 2 ||
+      conversations[id].title === 'Untitled Conversation' ||
+      conversations[id].description === "This conversation hasn't been summarized."
+    ) {
       await chatGptApi.summarize(id);
       conversations = chatGptApi.convos();
       setConversations(conversations);

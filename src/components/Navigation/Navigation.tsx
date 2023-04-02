@@ -20,7 +20,7 @@ export const Navigation = () => {
     } else {
       setChatTitle('');
     }
-  }, [chatId]);
+  }, [chatId, conversations]);
 
   const settingsDrawerHandler = () => {
     if (settingsOpen) {
