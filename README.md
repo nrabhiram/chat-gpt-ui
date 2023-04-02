@@ -1,12 +1,28 @@
 # Vite React Typescript Tailwind Template
 
 <p align="center">
-    <img src="./public/vite-logo.png" width="240" height="240" alt="vite">
+    <img src="./public/demo.gif" alt="demo">
     <br>
     <br>
 </p>
 
-This template has been configured with all of the tools required to create a React Application using **TypeScript** and **TailwindCSS** with Vite.
+This is a chat-app that was built using [Open AI's API](https://platform.openai.com/docs/introduction). You can:
+
+1. Chat with Open AI's models
+2. Summarize and store your conversations
+3. Configure the session's settings, i.e. the model's parameter such as the *Temperature*, *Max Token Length*, and *System Prompt*
+
+## Impoving the Design
+
+For this project, I thought about how I could further improve the design of [Chat GPT](https://chat.openai.com/) to enhance the user's experience. Here are some of the design decisions I took and the reasoning behind them:
+
+1. **Clear Call-to-Actions (CTAs)** so that the user knows what to do immediately → I felt that Chat GPT's homepage is cluttered. There's info about the models, prompt templates, a textarea for the chats, and a side-drawer with the previous conversations. I decided to strip away all of this information so that the user understands what the app's core feature. Then, once they feel ready to check the other features out, they can click on the icons.
+2. **Prompt templates on the chat page**  → They're displayed before the conversation has been initiated, before the user has typed anything. So, in case, the user has run out of ideas, they can fall back on the templates.
+3. **A separate about page** → The product's capabilities and limitations were placed together with the prompts, thus making it difficult to distinguish between them. So, I decided to assing them a separate page that the user could check out if they're interested to learn more.
+4. I like the Open AI's chat page; it feels like you're having a conversation with an actual person. So, I decided to lean further towards this direction by creating a **chat interface similar to Whatsapp**, with speech bubbles, and typing animations.
+5. **Dark theme for accessibility** → So that it doesn't strain the users' eyes.
+6. **The frontend's responsive** and works on mobile too
+
 
 ## Technologies
 
