@@ -35,7 +35,7 @@ export const HomePage = () => {
         <div className={styles['hero-text']}>
           <h1 className={styles['primary-heading']}>Your personal AI assistant</h1>
           <p className={styles['subtitle']}>
-            Lorem ipsum about the cta&apos;s for the user. Lorem ipsum about the cta&apos;s for the user.
+            Your virtual companion is always here to help make your life easier!
           </p>
         </div>
         <div className={styles['hero-btn-container']}>
