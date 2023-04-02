@@ -51,6 +51,11 @@ For this project, I thought about how I could further improve the design of [Cha
 2. Run `npm install` to install all of the project's dependencies
 3. Build the project for production: `npm run build`
 4. Run the local development server: `npm run dev`
+5. Create a `.env` file in the project root folder and add your API key:
+   
+    ```
+    VITE_OPENAI_API_KEY = <YourApiKey>
+    ```
 
 ### Tailwind + CSS Modules
 
