@@ -21,7 +21,7 @@ export class Conversation {
   }
 
   summarize(summary: Summary) {
-    if (this.speeches.length > 2) {
+    if (this.speeches.length >= 2) {
       this._title = summary.title;
       this._description = summary.description;
     }

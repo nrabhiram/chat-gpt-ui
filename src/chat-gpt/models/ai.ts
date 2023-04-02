@@ -30,10 +30,12 @@ export class AI extends Speaker {
   }
 
   async summarize(conversation: Conversation) {
-    const titlePrompt = new Prompt("Summarize the following conversation with a title that doesn't exceed 20 letters");
-    const descriptionPrompt = new Prompt('Describe the following conversation in less than 50 words.');
-    const title = await this.request(titlePrompt, conversation, 100, 0);
-    const description = await this.request(descriptionPrompt, conversation, 100, 0);
+    const titlePrompt = new Prompt("Summarize the following conversation with a title that doesn't exceed 20 letters.");
+    const descriptionPrompt = new Prompt(
+      'Read the following conversation, and based on the topic, predict what will be talked about. Then, write a short paragraph that summarizes the conversation.',
+    );
+    const title = await this.request(titlePrompt, conversation, this.token.length, 0);
+    const description = await this.request(descriptionPrompt, conversation, this.token.length, 0);
     conversation.summarize({ title: title.content, description: description.content });
   }
 

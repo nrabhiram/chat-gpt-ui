@@ -28,7 +28,7 @@ export const SpeechBubble: React.FC<{
         className={styles[containerClass]}
         animate={{ y: 0, opacity: 1 }}
         initial={{ y: 60, opacity: 0 }}
-        transition={{ duration: 0.5 + (props.delay ? props.delay : 0) }}
+        transition={{ duration: 0.5, delay: props.delay ? props.delay : 0 }}
       >
         <div className="grow"></div>
         <div className={styles[speechBubbleClass]}>{content}</div>

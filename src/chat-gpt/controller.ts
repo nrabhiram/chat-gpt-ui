@@ -27,9 +27,16 @@ export class Controller {
     human.add(speech, curConvo);
     const response = await ai.think(curConvo);
     ai.add(response, curConvo);
-    // await ai.summarize(curConvo);
     this.writeConversations(convos);
     return response;
+  }
+
+  async summarize(convoId: number) {
+    const convos = this.readConversations();
+    const curConvo = convos[convoId];
+    const ai = this.readAI();
+    await ai.summarize(curConvo);
+    this.writeConversations(convos);
   }
 
   configure(temperature: number, token: number, prompt: string) {

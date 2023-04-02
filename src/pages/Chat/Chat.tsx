@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ChatInput } from '../../components/ChatInput/ChatInput';
 import { SpeechBubble } from '../../components/SpeechBubble/SpeechBubble';
 import { AIContext } from '../../context/ai-context';
@@ -22,6 +22,7 @@ export const ChatPage = () => {
   const { chatId } = useParams() as any;
   const { sendPrompt, conversations } = useContext(AIContext);
   const navigate = useNavigate();
+  const chatEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (conversations[chatId]) {
@@ -51,6 +52,7 @@ export const ChatPage = () => {
         setError('Oops...an error has occurred. Please try again.');
       }
       setLoading(false);
+      chatEndRef!.current!.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -77,6 +79,16 @@ export const ChatPage = () => {
       )}
       {conversation && conversation.speeches.length > 0 && (
         <div className={styles['chat-container']}>
+          {conversation.description && (
+            <motion.p
+              className="mb-4"
+              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: -60 }}
+              transition={{ duration: 0.5 }}
+            >
+              {conversation.description}
+            </motion.p>
+          )}
           {conversation.speeches.map((speech, id) => {
             const speaker = speech.speaker === 'HUMAN' ? 'user' : 'ai';
             let animate = false;
@@ -87,6 +99,7 @@ export const ChatPage = () => {
           })}
           {loading && <SpeechBubble speaker="ai" text="" loading={true} animate={true} delay={0.5} />}
           {error && <div className={styles['error-container']}>{error}</div>}
+          <div ref={chatEndRef} />
         </div>
       )}
       <ChatInput

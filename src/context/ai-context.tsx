@@ -52,6 +52,17 @@ export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {
     await chatGptApi.prompt(id, prompt);
     const conversations = chatGptApi.convos();
     setConversations(conversations);
+    summarizeConvo(id);
+  };
+
+  const summarizeConvo = async (id: number) => {
+    const chatGptApi = new Controller();
+    let conversations = chatGptApi.convos();
+    if (conversations[id].speeches.length === 2) {
+      await chatGptApi.summarize(id);
+      conversations = chatGptApi.convos();
+      setConversations(conversations);
+    }
   };
 
   const configure = (temp: number, token: number, prompt: string) => {

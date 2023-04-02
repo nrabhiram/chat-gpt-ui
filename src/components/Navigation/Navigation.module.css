@@ -3,9 +3,13 @@
 }
 
 .logo {
-    @apply flex items-center flex-shrink-0 text-white mr-6;
+    @apply flex items-center flex-shrink-0 text-white;
 }
 
 .title {
     @apply font-semibold text-xl tracking-tight hidden md:block;
+}
+
+.chat-title {
+    @apply font-medium sm:tracking-normal tracking-tighter text-base sm:text-lg;
 }
